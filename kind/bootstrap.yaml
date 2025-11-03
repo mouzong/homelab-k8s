@@ -1,11 +1,12 @@
 # bootstrap.yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
+name: homelab
 
-# Define cluster nodes
 nodes:
-  # --- Control Plane Node ---
+  # Control plane node
   - role: control-plane
+    name: master
     kubeadmConfigPatches:
       - |
         kind: InitConfiguration
@@ -20,32 +21,12 @@ nodes:
         hostPort: 443
         protocol: TCP
 
-  # --- Worker Nodes ---
+  # Worker nodes
   - role: worker
-    kubeadmConfigPatches:
-      - |
-        kind: JoinConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "node-role.kubernetes.io/worker=worker1"
+    name: worker1
   - role: worker
-    kubeadmConfigPatches:
-      - |
-        kind: JoinConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "node-role.kubernetes.io/worker=worker2"
+    name: worker2
   - role: worker
-    kubeadmConfigPatches:
-      - |
-        kind: JoinConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "node-role.kubernetes.io/worker=worker3"
+    name: worker3
   - role: worker
-    kubeadmConfigPatches:
-      - |
-        kind: JoinConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "node-role.kubernetes.io/worker=worker4"
+    name: worker4
